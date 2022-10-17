@@ -10,8 +10,12 @@ export const cartSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const isItemInCart = state.items.filter((item) => item.id === action.payload.id)
+      let itemInCartQty = isItemInCart[0]?.qty
+      const allOtherItems = state.items.filter((item) => item.id !== action.payload.id)
       if (!isItemInCart?.length) {
         state.items.push({...action.payload, qty: 1})
+      } else {
+        state.items = [...allOtherItems, {...action.payload, qty: itemInCartQty += 1}] 
       }
     },
     removeItem: (state, action) => {
