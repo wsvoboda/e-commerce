@@ -8,17 +8,19 @@ import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '../../redux/cartSlice';
 
-export default function MediaCard({ storeItem, isInCart = false }) {
+export default function MediaCard({ storeItem, isInCart = false, setIsMovingItem }) {
   const dispatch = useDispatch()
   const allItems = useSelector(state => state.store.items)
 
   const addItemToCart = (itemId) => {
     const individualItem = allItems.find(item => item.id === itemId)
     dispatch(addItem(individualItem))
+    setIsMovingItem(true)
   }
 
   const removeItemFromCart = (itemId) => {
     dispatch(removeItem(itemId))
+    setIsMovingItem(true)
   }
 
   return (
